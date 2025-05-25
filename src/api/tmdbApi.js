@@ -36,7 +36,7 @@ const tmdbApi = {
     },
     detail: (cate, id, params) => {
         const url = category[cate] + '/' + id;
-        return axiosInstance.get(url, params);
+        return axiosInstance.get(url,params);
     },
     credits: (cate, id) => {
         const url = category[cate] + '/' + id + '/credits';

@@ -1,0 +1,89 @@
+@use "../.././scss/" as *;
+.details-container {
+  padding:1rem 1rem 0 1rem;
+  margin-top: 100px;
+}
+
+.details-card {
+  background: $body-bg;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 0 1rem;
+}
+
+.details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5rem;
+  padding:0 2rem ;
+}
+.poster {
+  flex-basis: 26%;
+}
+.poster img {
+  max-height: 90%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.details-content *{
+    margin:1rem 0;
+}
+.details-content {
+  flex: 1;
+}
+
+.details-content h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.tagline, .release-date {
+  color: #888;
+  font-style: italic;
+}
+
+.rating {
+  margin: 0.5rem 0;
+}
+
+.overview {
+  margin-bottom: 1rem;
+}
+.info-row *{
+    margin-right:1rem;
+}
+.info-row {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.genres {
+  margin-top: 1rem;
+}
+
+.genre {
+  display: inline-block;
+  background-color: #ff4c29;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.official-link {
+  display: inline-block;
+  background-color: black;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  transition: background 0.3s;
+}
+
+.official-link:hover {
+  background-color: #222;
+}

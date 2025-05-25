@@ -82,3 +82,8 @@ iframe {
 .section__header {
     @include flex(center, space-between);
 }
+
+
+.bootstrap-wrapper {
+  @import 'bootstrap/dist/css/bootstrap-grid.min.css';
+}

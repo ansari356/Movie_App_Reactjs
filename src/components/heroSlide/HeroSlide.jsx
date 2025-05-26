@@ -13,12 +13,14 @@ import tmdbApi, { movieType } from '../../api/tmdbApi';
 import './heroslide.scss';
 import HeroSlideItem from './HeroSlideItem';
 import TrailerModal from './TrailorModel';
+import Loading from '../loading/Loading';
 
 const HeroSlide = () => {
 
     SwiperCore.use([Autoplay]);
 
-      
+    const [loading, setLoading] = useState(true);
+    
     const [movieItems, setMovieItems] = useState([]);
 
     useEffect(() => {
@@ -29,14 +31,18 @@ const HeroSlide = () => {
                 const response = await tmdbApi.getMoviesList(movieType.popular, {params});
                 setMovieItems(response.results.slice(3, 8));
                 
-                console.log(response);
+                setLoading(false);
+                
             } catch {
+                setLoading(false);
                 console.log('error');
             }
         }
         getMovies();
     }, []);
 
+    if (loading) return <Loading />;
+    
     return (
         <div className="hero-slide">
             <Swiper

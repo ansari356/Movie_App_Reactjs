@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import Loading from './components/loading/Loading';
+import Home from './pages/Home';
 function App() {
   // const [count, setCount] = useState(0)
 
@@ -26,9 +28,8 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <Header />
-
           <Suspense
-            fallback={<div className="text-center mt-5">Loading...</div>}
+            fallback={<Loading/>}
           >
             <Routes>
               <Route path="/" element={<Home />} />
@@ -37,7 +38,7 @@ function App() {
               <Route path="/movies/:id" element={<MovieDetails />} />
 
               <Route path="/tvShows" element={<TvShowsPage />} />
-              <Route path="/tvShows/:id" element={<TvDetails />} />
+              <Route path="/tv/:id" element={<TvDetails />} />
 
               <Route path="/search" element={<SearchPage />} />
 

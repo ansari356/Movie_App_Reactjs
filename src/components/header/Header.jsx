@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./header.scss";
 import logo from '../../assets/logosvg.svg';
@@ -9,6 +9,17 @@ import logo from '../../assets/logosvg.svg';
 export default function Header() {
     const location = useLocation();
     const currentPath = location.pathname;
+
+    const [scroll, setScroll] = useState(false);
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            setScroll(window.scrollY > 0);
+        });
+    }, []);
+
+    const headerStyle = {
+        backgroundColor: scroll ? 'rgb(31 31 31 / 38%)' : 'transparent',
+    };
 
       const navLinks = [
     { path: "/", label: "Home" },
@@ -20,7 +31,7 @@ export default function Header() {
   ];
 
   return (
-    <div id="header" className="header">
+    <div id="header" className="header" style={headerStyle}>
       <div className="header__wrap container">
         <div className="logo">
           <img src={logo} alt="" />

@@ -18,7 +18,8 @@ export default function Header() {
     }, []);
 
     const headerStyle = {
-        backgroundColor: scroll ? 'rgb(31 31 31 / 38%)' : 'transparent',
+        backdropFilter: scroll ? 'blur(10px)' : 'transparent',
+        
     };
 
       const navLinks = [

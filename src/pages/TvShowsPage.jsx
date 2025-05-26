@@ -52,14 +52,24 @@ const TvShowsPage = () => {
 
         )}
       </div>
-      <h2>Popular TV Shows</h2>
-      <MovieList items={popularTv} category={category.tv} />
+      <div style={{ marginBottom: '2rem',marginTop: '2rem' }}>
 
+      <h2>Popular TV Shows</h2>
+      <br />
+      <MovieList items={popularTv} category={category.tv} />
+      </div>
+      <div style={{ marginBottom: '2rem',marginTop: '2rem' }}>
+      
       <h2>Top Rated TV Shows</h2>
+      <br />
       <MovieList items={topRatedTv} category={category.tv} />
+      </div>
+      <div style={{ marginBottom: '2rem',marginTop: '2rem' }}>
 
       <h2>On The Air</h2>
+      <br />
       <MovieList items={onTheAirTv} category={category.tv} />
+      </div>
     </div>
   );
 };

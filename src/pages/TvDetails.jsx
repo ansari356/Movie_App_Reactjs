@@ -13,26 +13,7 @@ export default function TvDetails() {
   const [tvData, setTvData] = useState(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const setModalActive = async () => {
-    // const modal = document.querySelector(`#modal_${tvData.id}`);
-    
-    const videos = await tmdbApi.getVideos(category.tv, tvData.id);
-
-    console.log(videos)
-
-    // if (videos.results.length > 0) {
-    //   const videSrc = "https://www.youtube.com/embed/" + videos.results[0].key;
-    //   modal
-    //     .querySelector(".modal__content > iframe")
-    //     .setAttribute("src", videSrc);
-        
-    // } else {
-    //   modal.querySelector(".modal__content").innerHTML = "No trailer";
-    // }
-
-    // modal.classList.toggle("active");
-  };
-setModalActive();
+  
 
   useEffect(() => {
     const fetchDetails = async () => {

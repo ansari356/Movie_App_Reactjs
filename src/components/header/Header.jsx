@@ -13,12 +13,13 @@ export default function Header() {
     const [scroll, setScroll] = useState(false);
     useEffect(() => {
         window.addEventListener("scroll", () => {
-            setScroll(window.scrollY > 0);
+            setScroll(window.scrollY);
+
         });
-    }, []);
+    }, [window.scrollY]);
 
     const headerStyle = {
-        backdropFilter: scroll ? 'blur(10px)' : 'transparent',
+        backdropFilter: scroll === 0 ? "unset" : "blur(10px)",
         
     };
 

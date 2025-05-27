@@ -10,10 +10,10 @@ export default function NotFound() {
   return (
     <>
 
-    <div className='container' style={{backgroundColor:"gray"}}>
-<Lottie animationData={notfound} loop={true} autoplay={true} style={{width:"80%", margin:"auto"}} />
+    <div className='container1'>
+    <Lottie animationData={notfound} loop={true} autoplay={true}/>
 
-      <button onClick={() => navigate("/")}>Go Back Home</button>
+      <button className='bton' onClick={() => navigate("/")}>Go Back Home</button>
       
     </div>
 

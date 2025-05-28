@@ -10,12 +10,9 @@ import tmdbApi, { category, movieType, tvType } from '../../api/tmdbApi';
 import MovieCard from '../movieCard/MovieCard';
 
 const MovieGrid = props => {
-
     const [items, setItems] = useState([]);
-
     const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(0);
-
+    const totalPage = props.totalPages;
     const { keyword } = useParams();
 
     // useEffect(() => {
@@ -47,7 +44,6 @@ const MovieGrid = props => {
     const getList = async () => {
         if (props.items && props.items.length > 0) {
             setItems(props.items);
-            setTotalPage(1);
             return;
         }
 
@@ -69,7 +65,6 @@ const MovieGrid = props => {
         }
 
         setItems(response.results);
-        setTotalPage(response.total_pages);
     };
 
     getList();

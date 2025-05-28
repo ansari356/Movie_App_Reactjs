@@ -12,6 +12,10 @@ const TvShowsPage = () => {
   const [searchShows, setSearchShows] = useState([]);
   const [activeSection, setActiveSection] = useState('popular');
   const [query, setQuery] = useState("");
+  const [popularTvTotalPages, setPopularTvTotalPages] = useState(1);
+  const [topRatedTvTotalPages, setTopRatedTvTotalPages] = useState(1);
+  const [onTheAirTvTotalPages, setOnTheAirTvTotalPages] = useState(1);
+  const [searchShowsTotalPages, setSearchShowsTotalPages] = useState(1);
 
 
 
@@ -43,13 +47,16 @@ const TvShowsPage = () => {
       try {
         const res1 = await tmdbApi.getTvList('popular', { params: {} });
         setPopularTv(res1.results);
-        
+        setPopularTvTotalPages(res1.total_pages);
 
         const res2 = await tmdbApi.getTvList('top_rated', { params: {} });
         setTopRatedTv(res2.results);
+        setTopRatedTvTotalPages(res2.total_pages);
 
         const res3 = await tmdbApi.getTvList('on_the_air', { params: {} });
         setOnTheAirTv(res3.results);
+        setOnTheAirTvTotalPages(res3.total_pages);
+
       } catch (err) {
         console.error("Error fetching TV shows: ", err);
       }
@@ -83,7 +90,7 @@ const TvShowsPage = () => {
         <>
           <h2>Popular TV Shows</h2>
           <br />
-          <MovieGrid items={popularTv} category={category.tv} />
+          <MovieGrid items={popularTv} category={category.tv} totalPages={popularTvTotalPages}/>
         </>
       )}
 
@@ -91,7 +98,7 @@ const TvShowsPage = () => {
         <>
           <h2>Top Rated TV Shows</h2>
           <br />
-          <MovieGrid items={topRatedTv} category={category.tv} />
+          <MovieGrid items={topRatedTv} category={category.tv} totalPages={topRatedTvTotalPages}/>
         </>
       )}
 
@@ -99,7 +106,7 @@ const TvShowsPage = () => {
         <>
           <h2>On The Air</h2>
           <br />
-          <MovieGrid items={onTheAirTv} category={category.tv} />
+          <MovieGrid items={onTheAirTv} category={category.tv} totalPages={onTheAirTvTotalPages}/>
         </>
       )}
     </div>

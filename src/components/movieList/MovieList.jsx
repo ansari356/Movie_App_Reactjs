@@ -60,22 +60,146 @@
 // }
 
 // export default MovieList;
-import React from 'react';
+// import React from 'react';
+// import PropTypes from 'prop-types';
+// import './movielist.scss';
+
+// import { SwiperSlide, Swiper } from 'swiper/react';
+// import MovieCard from '../movieCard/MovieCard';
+// import { useState } from 'react';
+// import { useParams } from 'react-router';
+// import Button, { OutlineButton } from '../button/Button';
+
+// const MovieList = ({ items = [], category }) => {
+//     const [page, setPage] = useState(1);
+//     const [totalPage, setTotalPage] = useState(5);
+
+//     const { keyword } = useParams();
+//     const loadMore = async () => {
+//         let response = null;
+//         if (keyword === undefined) {
+//             const params = {
+//                 page: page + 1
+//             };
+//             switch(props.category) {
+//                 case category.movie:
+//                     response = await tmdbApi.getMoviesList(movieType.upcoming, {params});
+//                     break;
+//                 default:
+//                     response = await tmdbApi.getTvList(tvType.popular, {params});
+//             }
+//         } else {
+//             const params = {
+//                 page: page + 1,
+//                 query: keyword
+//             }
+//             response = await tmdbApi.search(props.category, {params});
+//         }
+//         setItems([...items, ...response.results]);
+//         setPage(page + 1);
+//     }
+//     return (
+//         <div className="movie-list">
+//             <Swiper grabCursor={true} spaceBetween={10} slidesPerView={'auto'}>
+//                 {items.map((item, i) => (
+//                     <SwiperSlide key={i}>
+//                         <MovieCard item={item} category={category} />
+//                     </SwiperSlide>
+//                 ))}
+//             </Swiper>
+//             {
+//                 page < totalPage ? (
+//                     <div className="movie-grid__loadmore">
+//                         <OutlineButton className="small" onClick={loadMore}>Load more</OutlineButton>
+//                     </div>
+//                 ) : null
+//             }
+//         </div>
+//     );
+// };
+
+// MovieList.propTypes = {
+//     category: PropTypes.string.isRequired,
+//     items: PropTypes.array.isRequired
+// };
+
+// export default MovieList;
+
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './movielist.scss';
-
 import { SwiperSlide, Swiper } from 'swiper/react';
 import MovieCard from '../movieCard/MovieCard';
+import tmdbApi, { category } from '../../api/tmdbApi';
+import Button from '../button/Button';
 
-const MovieList = ({ items = [], category }) => {
+const MovieList = ({ category, type, id }) => {
+    const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const swiperRef = useRef(null);
+
+    const fetchItems = async (pageNum = 1) => {
+        setLoading(true);
+        try {
+            let response = null;
+            const params = { page: pageNum };
+
+            if (type !== 'similar') {
+                switch (category) {
+                    case category.movie:
+                        response = await tmdbApi.getMoviesList(type, { params });
+                        break;
+                    default:
+                        response = await tmdbApi.getTvList(type, { params });
+                }
+            } else {
+                response = await tmdbApi.similar(category, id, { params });
+            }
+
+            setItems((prevItems) => (pageNum === 1 ? response.results : [...prevItems, ...response.results]));
+            setTotalPage(response.total_pages);
+            setPage(pageNum);
+        } catch (err) {
+            console.error('Fetch failed', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchItems(1);
+    }, [category, type, id]);
+
+    const handleLoadMore = async () => {
+        if (page < totalPage && !loading) {
+            await fetchItems(page + 1);
+            if (swiperRef.current && swiperRef.current.swiper) {
+                swiperRef.current.swiper.update();
+                swiperRef.current.swiper.slideTo(items.length);
+            }
+        }
+    };
+
     return (
         <div className="movie-list">
-            <Swiper grabCursor={true} spaceBetween={10} slidesPerView={'auto'}>
+            <Swiper
+                grabCursor={true}
+                spaceBetween={10}
+                slidesPerView={'auto'}
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+            >
                 {items.map((item, i) => (
-                    <SwiperSlide key={i}>
+                    <SwiperSlide key={`${item.id}-${i}`}>
                         <MovieCard item={item} category={category} />
                     </SwiperSlide>
                 ))}
+                {page < totalPage && !loading && (
+                    <SwiperSlide className="movie-list__loadmore-slide" style={{display: 'flex',justifyContent:'center', alignItems:'center', height:'300px'}}>
+                        <Button onClick={handleLoadMore}>< i className='bx  bx-chevron-right'></i> </Button>
+                    </SwiperSlide>
+                )}
             </Swiper>
         </div>
     );
@@ -83,8 +207,8 @@ const MovieList = ({ items = [], category }) => {
 
 MovieList.propTypes = {
     category: PropTypes.string.isRequired,
-    items: PropTypes.array.isRequired
+    type: PropTypes.string.isRequired,
+    id: PropTypes.number,
 };
 
 export default MovieList;
-

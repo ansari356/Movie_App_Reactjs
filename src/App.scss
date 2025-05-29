@@ -82,3 +82,28 @@ iframe {
 .section__header {
     @include flex(center, space-between);
 }
+
+
+.container .section .header-details{
+    position: relative;
+    width: fit-content;
+    padding: 0.5rem 1.8rem;padding: 0.5rem 1.8rem;
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 600;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+    letter-spacing: normal
+}
+.container .section .header-details::before{
+    background: #ff0000;
+    border-radius: 5px;
+    content:"";
+    position: absolute;
+    height: 75%;
+    width: 4px;
+    margin-left: -.95rem;
+    
+}

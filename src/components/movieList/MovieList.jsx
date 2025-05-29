@@ -130,7 +130,7 @@ import PropTypes from 'prop-types';
 import './movielist.scss';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import MovieCard from '../movieCard/MovieCard';
-import tmdbApi, { category} from '../../api/tmdbApi';
+import tmdbApi, {category} from '../../api/tmdbApi';
 import Button from '../button/Button';
 
 const MovieList = ({ categoryInput, type, id }) => {

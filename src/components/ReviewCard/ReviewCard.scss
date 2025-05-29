@@ -1,0 +1,50 @@
+@use "../.././scss/" as *;
+
+
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 1.5rem; 
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.review-card {
+  padding: 1.5rem;
+  background-color: $body-bg;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  
+  .top {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    
+    &:last-child {
+      color: #6c757d;
+      font-size: 0.85rem;
+      margin-bottom: 0;
+      font-style: italic;
+    }
+  }
+}
+

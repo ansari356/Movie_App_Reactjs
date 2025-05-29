@@ -6,7 +6,7 @@
 // import { SwiperSlide, Swiper } from 'swiper/react';
 
 
-// import tmdbApi, { category } from '../../api/tmdbApi';
+// import tmdbApi, { categoryInput } from '../../api/tmdbApi';
 
 // import MovieCard from '../movieCard/MovieCard';
 
@@ -20,15 +20,15 @@
 //             const params = {};
 
 //             if (props.type !== 'similar') {
-//                 switch(props.category) {
-//                     case category.movie:
+//                 switch(props.categoryInput) {
+//                     case categoryInput.movie:
 //                         response = await tmdbApi.getMoviesList(props.type, {params});
 //                         break;
 //                     default:
 //                         response = await tmdbApi.getTvList(props.type, {params});
 //                 }
 //             } else {
-//                 response = await tmdbApi.similar(props.category, props.id);
+//                 response = await tmdbApi.similar(props.categoryInput, props.id);
 //             }
 //             setItems(response.results);
 //         }
@@ -45,7 +45,7 @@
 //                 {
 //                     items.map((item, i) => (
 //                         <SwiperSlide key={i}>
-//                             <MovieCard item={item} category={props.category}/>
+//                             <MovieCard item={item} categoryInput={props.categoryInput}/>
 //                         </SwiperSlide>
 //                     ))
 //                 }
@@ -55,7 +55,7 @@
 // }
 
 // MovieList.propTypes = {
-//     category: PropTypes.string.isRequired,
+//     categoryInput: PropTypes.string.isRequired,
 //     type: PropTypes.string.isRequired
 // }
 
@@ -70,7 +70,7 @@
 // import { useParams } from 'react-router';
 // import Button, { OutlineButton } from '../button/Button';
 
-// const MovieList = ({ items = [], category }) => {
+// const MovieList = ({ items = [], categoryInput }) => {
 //     const [page, setPage] = useState(1);
 //     const [totalPage, setTotalPage] = useState(5);
 
@@ -81,8 +81,8 @@
 //             const params = {
 //                 page: page + 1
 //             };
-//             switch(props.category) {
-//                 case category.movie:
+//             switch(props.categoryInput) {
+//                 case categoryInput.movie:
 //                     response = await tmdbApi.getMoviesList(movieType.upcoming, {params});
 //                     break;
 //                 default:
@@ -93,7 +93,7 @@
 //                 page: page + 1,
 //                 query: keyword
 //             }
-//             response = await tmdbApi.search(props.category, {params});
+//             response = await tmdbApi.search(props.categoryInput, {params});
 //         }
 //         setItems([...items, ...response.results]);
 //         setPage(page + 1);
@@ -103,7 +103,7 @@
 //             <Swiper grabCursor={true} spaceBetween={10} slidesPerView={'auto'}>
 //                 {items.map((item, i) => (
 //                     <SwiperSlide key={i}>
-//                         <MovieCard item={item} category={category} />
+//                         <MovieCard item={item} categoryInput={categoryInput} />
 //                     </SwiperSlide>
 //                 ))}
 //             </Swiper>
@@ -119,7 +119,7 @@
 // };
 
 // MovieList.propTypes = {
-//     category: PropTypes.string.isRequired,
+//     categoryInput: PropTypes.string.isRequired,
 //     items: PropTypes.array.isRequired
 // };
 
@@ -130,10 +130,10 @@ import PropTypes from 'prop-types';
 import './movielist.scss';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import MovieCard from '../movieCard/MovieCard';
-import tmdbApi, { category } from '../../api/tmdbApi';
+import tmdbApi, { category} from '../../api/tmdbApi';
 import Button from '../button/Button';
 
-const MovieList = ({ category, type, id }) => {
+const MovieList = ({ categoryInput, type, id }) => {
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
@@ -147,7 +147,7 @@ const MovieList = ({ category, type, id }) => {
             const params = { page: pageNum };
 
             if (type !== 'similar') {
-                switch (category) {
+                switch (categoryInput) {
                     case category.movie:
                         response = await tmdbApi.getMoviesList(type, { params });
                         break;
@@ -155,7 +155,7 @@ const MovieList = ({ category, type, id }) => {
                         response = await tmdbApi.getTvList(type, { params });
                 }
             } else {
-                response = await tmdbApi.similar(category, id, { params });
+                response = await tmdbApi.similar(categoryInput, id, { params });
             }
 
             setItems((prevItems) => (pageNum === 1 ? response.results : [...prevItems, ...response.results]));
@@ -170,7 +170,7 @@ const MovieList = ({ category, type, id }) => {
 
     useEffect(() => {
         fetchItems(1);
-    }, [category, type, id]);
+    }, [categoryInput, type, id]);
 
     const handleLoadMore = async () => {
         if (page < totalPage && !loading) {
@@ -192,7 +192,7 @@ const MovieList = ({ category, type, id }) => {
             >
                 {items.map((item, i) => (
                     <SwiperSlide key={`${item.id}-${i}`}>
-                        <MovieCard item={item} category={category} />
+                        <MovieCard item={item} category={categoryInput} />
                     </SwiperSlide>
                 ))}
                 {page < totalPage && !loading && (
@@ -206,7 +206,7 @@ const MovieList = ({ category, type, id }) => {
 };
 
 MovieList.propTypes = {
-    category: PropTypes.string.isRequired,
+    categoryInput: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     id: PropTypes.number,
 };

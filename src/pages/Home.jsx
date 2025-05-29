@@ -110,7 +110,7 @@ export default function Home() {
         setTimeout(() => setLoading(false), 500); // Adjust based on actual async needs
     }, []);
 
-    // if (loading) return <Loading />;
+    if (loading) return <Loading />;
 
     return (
         <div>
@@ -123,7 +123,7 @@ export default function Home() {
                             <OutlineButton className="small">View more</OutlineButton>
                         </Link>
                     </div>
-                    <MovieList category={category.movie} type={movieType.popular} />
+                    <MovieList categoryInput={category.movie} type={movieType.popular} />
                 </div>
 
                 <div className="section mb-3">
@@ -133,7 +133,7 @@ export default function Home() {
                             <OutlineButton className="small">View more</OutlineButton>
                         </Link>
                     </div>
-                    <MovieList category={category.movie} type={movieType.top_rated} />
+                    <MovieList categoryInput={category.movie} type={movieType.top_rated} />
                 </div>
 
                 <div className="section mb-3">
@@ -143,7 +143,7 @@ export default function Home() {
                             <OutlineButton className="small">View more</OutlineButton>
                         </Link>
                     </div>
-                    <MovieList category={category.tv} type={tvType.popular} />
+                    <MovieList categoryInput={category.tv} type={tvType.popular} />
                 </div>
 
                 <div className="section mb-3">
@@ -153,7 +153,7 @@ export default function Home() {
                             <OutlineButton className="small">View more</OutlineButton>
                         </Link>
                     </div>
-                    <MovieList category={category.tv} type={tvType.top_rated} />
+                    <MovieList categoryInput={category.tv} type={tvType.top_rated} />
                 </div>
             </div>
         </div>

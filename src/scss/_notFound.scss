@@ -1,0 +1,38 @@
+
+
+.container1{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+
+.bton{
+    padding: 1%;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+}
+.bton:hover{
+    background-color: #fff;
+    color: #ff0000;
+}
+
+@media screen and (max-width: 600px) {
+    .container1{
+        height: 100vh;
+        display: flex;
+    }
+    .bton{
+        left: 10%;
+        font-size: 1rem;
+    }
+    
+}

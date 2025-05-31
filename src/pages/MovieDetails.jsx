@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import tmdbApi, { category } from "../api/tmdbApi";
 import DetailsCard from "../components/detailsCard/DetailsCard";
 import MovieList from "../components/movieList/MovieList";
 import { OutlineButton } from "../components/button/Button";
 import axios from "axios";
 import ReviewCard from "../components/ReviewCard/ReviewCard";
+import translate from "../utils/translations";
 
 export default function MovieDetails() {
+  const selectedLanguage = useSelector(
+    (state) => state.language.selectedLanguage
+  );
   const { id } = useParams();
+
   const [movie, setMovie] = useState();
   const [recommend, setRecommend] = useState();
   const [reviews, setReviews] = useState();
-  const params = {};
+  const params = { language: selectedLanguage };
   const apiKey = "49846a5fea90eddee7c5c9e80d5c8cb7";
+
+  const lang = translate[selectedLanguage] || translate["en-US"];
 
   useEffect(() => {
     (async () => {
@@ -30,15 +38,18 @@ export default function MovieDetails() {
       console.log("recommend_res", recommend_res.results);
       console.log("review_res", review_res.data.results);
     })();
-  }, [id]);
+  }, [id, selectedLanguage]);
 
   return (
     <>
       {movie && <DetailsCard data={movie} type="movie" />}
-      <div className="container">
+      <div
+        className="container"
+        dir={selectedLanguage === "ar-SA" ? "rtl" : "ltr"}
+      >
         <div className="section">
           <hr style={{ opacity: 0.2 }} />
-          <h1 className="header-details">Recomendations</h1>
+          <h1 className="header-details"> {lang.recommendations}</h1>
           <div className="section mb-3">
             <MovieList categoryInput={category.movie} type="similar" id={id} />
           </div>
@@ -46,7 +57,7 @@ export default function MovieDetails() {
 
         {reviews && reviews.length > 0 && (
           <div className="section">
-            <h1 className="header-details">Reviews</h1>
+            <h1 className="header-details">{lang.reviews}</h1>
             <div className="reviews-grid">
               {reviews.map((review) => (
                 <ReviewCard key={review.id} data={review} />

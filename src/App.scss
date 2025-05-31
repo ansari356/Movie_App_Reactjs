@@ -84,26 +84,36 @@ iframe {
 }
 
 
-.container .section .header-details{
+.container .section .header-details {
     position: relative;
     width: fit-content;
-    padding: 0.5rem 1.8rem;padding: 0.5rem 1.8rem;
+    padding: 0.5rem 1.8rem;
     text-align: center;
     margin: 1rem 0;
     font-weight: 600;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.8rem;
-    font-weight: 600;
     line-height: 1.8rem;
-    letter-spacing: normal
+    letter-spacing: normal;
 }
-.container .section .header-details::before{
-    background: #ff0000;
-    border-radius: 5px;
-    content:"";
+
+.container .section .header-details::before {
+    content: "";
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     height: 75%;
     width: 4px;
-    margin-left: -.95rem;
-    
+    background: #ff0000;
+    border-radius: 5px;
+}
+
+/* For LTR layout */
+.container[dir="ltr"] .section .header-details::before {
+    left: 1rem; /* reduced from -0.95rem */
+}
+
+/* For RTL layout */
+.container[dir="rtl"] .section .header-details::before {
+    right: 1rem; /* reduced from -0.95rem */
 }

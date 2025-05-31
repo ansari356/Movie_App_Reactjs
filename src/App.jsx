@@ -1,5 +1,6 @@
 import 'swiper/css'; 
 import './assets/boxicons-2.0.7/css/boxicons.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import "./App.scss";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

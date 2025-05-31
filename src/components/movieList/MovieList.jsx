@@ -129,10 +129,15 @@ import PropTypes from "prop-types";
 import "./movielist.scss";
 import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../movieCard/MovieCard";
+import { useSelector } from "react-redux";
 import tmdbApi, { category } from "../../api/tmdbApi";
 import Button from "../button/Button";
 
 const MovieList = ({ categoryInput, type, id }) => {
+  const selectedLanguage = useSelector(
+    (state) => state.language.selectedLanguage
+  );
+
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -143,18 +148,21 @@ const MovieList = ({ categoryInput, type, id }) => {
     setLoading(true);
     try {
       let response = null;
-      const params = { page: pageNum };
+      const params = {
+        page: pageNum,
+        language: selectedLanguage,
+      };
 
       if (type !== "similar") {
         switch (categoryInput) {
           case category.movie:
-            response = await tmdbApi.getMoviesList(type, { params });
+            response = await tmdbApi.getMoviesList(type, params);
             break;
           default:
-            response = await tmdbApi.getTvList(type, { params });
+            response = await tmdbApi.getTvList(type, params);
         }
       } else {
-        response = await tmdbApi.similar(categoryInput, id, { params });
+        response = await tmdbApi.similar(categoryInput, id, params);
       }
 
       setItems((prevItems) =>
@@ -171,7 +179,7 @@ const MovieList = ({ categoryInput, type, id }) => {
 
   useEffect(() => {
     fetchItems(1);
-  }, [categoryInput, type, id]);
+  }, [categoryInput, type, id, selectedLanguage]);
 
   const handleLoadMore = async () => {
     if (page < totalPage && !loading) {

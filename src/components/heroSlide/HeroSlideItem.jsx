@@ -1,14 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import Button, { OutlineButton } from "../button/Button";
 
 import tmdbApi, { category } from "../../api/tmdbApi";
 import apiConfig from "../../api/apiConfig";
 
 import "./heroslide.scss";
+import translate from "../../utils/translations";
 const HeroSlideItem = (props) => {
   let navigate = useNavigate();
+
+  const selectedLanguage = useSelector(
+    (state) => state.language.selectedLanguage
+  );
+    const lang = translate[selectedLanguage] || translate["en-US"];
 
   const item = props.item;
 
@@ -37,18 +43,18 @@ const HeroSlideItem = (props) => {
     <div
       className={`hero-slide__item ${props.className}`}
       style={{ backgroundImage: `url(${background})` }}
+      dir={selectedLanguage === "ar-SA" ? "rtl" : "ltr"}
     >
       <div className="hero-slide__item__content container">
         <div className="hero-slide__item__content__info">
           <h2 className="title">{item.title}</h2>
           <div className="overview">{item.overview}</div>
           <div className="btns">
-            
             <Button onClick={() => navigate("/movie/" + item.id)}>
-              Watch now
+              {lang.watchNow}
             </Button>
             <OutlineButton onClick={setModalActive}>
-              Watch trailer
+              {lang.watchTrailer}
             </OutlineButton>
           </div>
         </div>

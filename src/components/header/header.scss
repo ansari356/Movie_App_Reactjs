@@ -46,7 +46,7 @@
         @include flex(center, unset);
 
         & > * ~ * {
-            margin-left: 2rem;
+            margin-inline-start: 2rem;
         }
 
         li {
@@ -90,4 +90,46 @@
             }
         }
     }
+    
+}
+
+.header__nav select.form-select {
+  background-color: transparent;  // Make it blend with header background
+  border: none;                   // Remove default border
+  border-bottom: 2px solid transparent;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: $main-color;             // Use your main theme color
+  padding: 2px 5px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-bottom-color: $main-color;  // highlight on focus like nav links underline
+  }
+
+  option {
+    background-color: $body-bg; // ensure option bg matches header bg (if supported)
+    color: #000;
+  }
+}
+.header__nav select.form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg fill='%23666' height='10' viewBox='0 0 24 24' width='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  padding-right: 10px;
+}
+.header__nav select.form-select option {
+  color: white;
+  background-color: $body-bg; // or a dark background if your header is dark
+}
+.header__nav select.form-select {
+  outline: none;
+  border: none;
+  box-shadow: none;
 }

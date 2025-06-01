@@ -29,8 +29,9 @@ const MoviesPage = () => {
 
   const handleSearch = async (query) => {
     try {
-      const res = await tmdbApi.search("movie", { params: { query } });
+      const res = await tmdbApi.search("movie",{query: query});
       setSearchMovies(res.results);
+      setSearchMoviesTotalPages(res.total_pages)
       if (res.results.length === 0) {
         document.getElementById("no-results").style.display = "block";
       }
@@ -52,17 +53,17 @@ const MoviesPage = () => {
         const params = {
           language: selectedLanguage,
         };
-        const res1 = await tmdbApi.getMoviesList("popular", params);
+        const res1 = await tmdbApi.getMoviesList({...params, sort_by: 'popularity.desc'});
         setPopularMovies(res1.results);
         setPopularMoviesTotalPages(res1.total_pages);
 
-        const res2 = await tmdbApi.getMoviesList("top_rated", params);
+        const res2 = await tmdbApi.getMoviesList({...params, sort_by: 'vote_average.desc'});
         setTopRatedMovies(res2.results);
         setTopRatedMoviesTotalPages(res2.total_pages);
 
-        const res3 = await tmdbApi.getMoviesList("upcoming", params);
-        setUpcomingMovies(res3.results);
-        setUpcomingMoviesTotalPages(res3.total_pages);
+        const res3 = await tmdbApi.getMoviesList({...params, sort_by: 'primary_release_date.desc'});
+        setNowPlayingMovies(res3.results);
+        setNowPlayingMoviesTotalPages(res3.total_pages);
       } catch (err) {
         console.error("Error fetching movies: ", err);
       }
@@ -71,7 +72,7 @@ const MoviesPage = () => {
     fetchData();
   }, [selectedLanguage]);
 
-  if (!popularMovies || !topRatedMovies || !upcomingMovies || !nowPlayingMovies)
+  if (!popularMovies || !topRatedMovies || !nowPlayingMovies)
     return <Loading />;
 
   return (
@@ -103,7 +104,7 @@ const MoviesPage = () => {
       </div>
 
       {searchMovies.length > 0 && (
-        <MovieGrid items={searchMovies} category={category.movie} />
+        <MovieGrid items={searchMovies} category={category.movie} totalPages={searchMoviesTotalPages} keyword={query}/>
       )}
       <h2
         id="no-results"
@@ -132,13 +133,6 @@ const MoviesPage = () => {
         </button>
 
         <button
-          onClick={() => setActiveSection("upcoming")}
-          className={`${activeSection === "upcoming" ? "active" : ""} categ`}
-        >
-          {lang.upcoming}
-        </button>
-
-        <button
           onClick={() => setActiveSection("now_playing")}
           className={`${activeSection === "now_playing" ? "active" : ""} categ`}
         >
@@ -154,6 +148,7 @@ const MoviesPage = () => {
             items={popularMovies}
             category={category.movie}
             totalPages={popularMoviesTotalPages}
+            sortedBy='popularity.desc'
           />
         </>
       )}
@@ -166,18 +161,7 @@ const MoviesPage = () => {
             items={topRatedMovies}
             category={category.movie}
             totalPages={topRatedMoviesTotalPages}
-          />
-        </>
-      )}
-
-      {activeSection === "upcoming" && (
-        <>
-          <h2>{lang.upcomingMovies}</h2>
-          <br />
-          <MovieGrid
-            items={upcomingMovies}
-            category={category.movie}
-            totalPages={upcomingMoviesTotalPages}
+            sortedBy='vote_average.desc'
           />
         </>
       )}
@@ -190,6 +174,7 @@ const MoviesPage = () => {
             items={nowPlayingMovies}
             category={category.movie}
             totalPages={nowPlayingMoviesTotalPages}
+            sortedBy='primary_release_date.desc'
           />
         </>
       )}

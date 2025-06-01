@@ -26,8 +26,9 @@ const TvShowsPage = () => {
 
   const handleSearch = async (query) => {
     try {
-      const res = await tmdbApi.search("tv", { params: { query } });
+      const res = await tmdbApi.search("tv", { query: query});
       setSearchShows(res.results);
+      setSearchShowsTotalPages(res.total_pages)
       if (res.results.length === 0) {
         document.getElementById("no-results").style.display = "block";
       }
@@ -49,15 +50,15 @@ const TvShowsPage = () => {
         const params = {
           language: selectedLanguage,
         };
-        const res1 = await tmdbApi.getTvList("popular", params);
+        const res1 = await tmdbApi.getTvList({...params, sort_by: 'popularity.desc'});
         setPopularTv(res1.results);
         setPopularTvTotalPages(res1.total_pages);
 
-        const res2 = await tmdbApi.getTvList("top_rated", params);
+        const res2 = await tmdbApi.getTvList({...params, sort_by: 'vote_average.desc'});
         setTopRatedTv(res2.results);
         setTopRatedTvTotalPages(res2.total_pages);
 
-        const res3 = await tmdbApi.getTvList("on_the_air", params);
+        const res3 = await tmdbApi.getTvList({...params, sort_by: 'first_air_date.desc'});
         setOnTheAirTv(res3.results);
         setOnTheAirTvTotalPages(res3.total_pages);
       } catch (err) {
@@ -96,7 +97,7 @@ const TvShowsPage = () => {
       </div>
 
       {searchShows.length > 0 && (
-        <MovieGrid items={searchShows} category={category.tv} />
+        <MovieGrid items={searchShows} category={category.tv} totalPages={searchShowsTotalPages} keyword={query}/>
       )}
       <h2
         id="no-results"
@@ -139,6 +140,7 @@ const TvShowsPage = () => {
             items={popularTv}
             category={category.tv}
             totalPages={popularTvTotalPages}
+            sortedBy='popularity.desc'
           />
         </>
       )}
@@ -151,6 +153,7 @@ const TvShowsPage = () => {
             items={topRatedTv}
             category={category.tv}
             totalPages={topRatedTvTotalPages}
+            sortedBy='vote_average.desc'
           />
         </>
       )}
@@ -163,6 +166,7 @@ const TvShowsPage = () => {
             items={onTheAirTv}
             category={category.tv}
             totalPages={onTheAirTvTotalPages}
+            sortedBy='first_air_date.desc'
           />
         </>
       )}

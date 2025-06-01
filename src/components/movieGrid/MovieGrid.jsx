@@ -18,8 +18,7 @@ const MovieGrid = (props) => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const totalPage = props.totalPages;
-  const { keyword } = useParams();
-
+  const keyword  = props.keyword || undefined;
   useEffect(() => {
     const getList = async () => {
       if (props.items && props.items.length > 0) {
@@ -59,15 +58,14 @@ const MovieGrid = (props) => {
       const params = {
         page: page + 1,
         language: selectedLanguage,
+        sort_by: props.sortedBy
       };
       switch (props.category) {
         case category.movie:
-          response = await tmdbApi.getMoviesList(movieType.upcoming, {
-            params,
-          });
+          response = await tmdbApi.getMoviesList(params);
           break;
         default:
-          response = await tmdbApi.getTvList(tvType.popular, params);
+          response = await tmdbApi.getTvList(params);
       }
     } else {
       const params = {

@@ -130,8 +130,9 @@ import "./movielist.scss";
 import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../movieCard/MovieCard";
 import { useSelector } from "react-redux";
-import tmdbApi, { category } from "../../api/tmdbApi";
+import tmdbApi, { category, movieType, tvType } from "../../api/tmdbApi";
 import Button from "../button/Button";
+import { original } from "@reduxjs/toolkit";
 
 const MovieList = ({ categoryInput, type, id }) => {
   const selectedLanguage = useSelector(
@@ -148,20 +149,27 @@ const MovieList = ({ categoryInput, type, id }) => {
     setLoading(true);
     try {
       let response = null;
-      const params = {
-        page: pageNum,
+      let params = {
+        include_adult: false,
         language: selectedLanguage,
+        page: pageNum,
       };
 
       if (type !== "similar") {
-        switch (categoryInput) {
-          case category.movie:
-            response = await tmdbApi.getMoviesList(type, params);
-            break;
-          default:
-            response = await tmdbApi.getTvList(type, params);
+        if (type == movieType.popular){
+          params = { ...params, sort_by: 'popularity.desc' };
         }
-      } else {
+        else{
+          params = { ...params, sort_by: 'vote_average.desc' };
+        }
+        if(categoryInput === category.movie) {
+          response = await tmdbApi.getMoviesList({...params});
+          }
+          else{
+            response = await tmdbApi.getTvList({...params});
+            }
+          }
+      else {
         response = await tmdbApi.similar(categoryInput, id, params);
       }
 

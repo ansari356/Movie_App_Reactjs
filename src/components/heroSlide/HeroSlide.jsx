@@ -35,7 +35,7 @@ const HeroSlide = () => {
         const params = {
           language: selectedLanguage,
         };
-        const response = await tmdbApi.getMoviesList(movieType.popular, params);
+        const response = await tmdbApi.getMoviesList(params);
         setMovieItems(response.results.slice(1, 6));
 
         setLoading(false);

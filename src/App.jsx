@@ -11,7 +11,6 @@ import Footer from "./components/footer/Footer";
 import Loading from './components/loading/Loading';
 import Home from './pages/Home';
 function App() {
-  // const [count, setCount] = useState(0)
 
   const Home = lazy(() => import("./pages/Home"));
   const MoviePage = lazy(() => import("./pages/MoviePage"));
@@ -19,8 +18,6 @@ function App() {
   const TvShowsPage = lazy(() => import("./pages/TvShowsPage"));
   const TvDetails = lazy(() => import("./pages/TvDetails"));
   const WatchList = lazy(() => import("./pages/WatchList"));
-  // const Login = lazy(() => import("./pages/Login"));
-  // const Register = lazy(() => import("./pages/Register"));
   const NotFound = lazy(() => import("./pages/NotFound"));
 
   return (
@@ -40,11 +37,7 @@ function App() {
               <Route path="/tvShows" element={<TvShowsPage />} />
               <Route path="/tv/:id" element={<TvDetails />} />
 
-
               <Route path="/watchlist" element={<WatchList />} />
-
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} /> */}
 
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -1,4 +1,3 @@
-
 import axiosInstance from "./axiosInstance";
 
 export const category = {
@@ -19,16 +18,16 @@ export const tvType = {
 };
 const mainParams = {
   include_adult: false,
-  region:'EG',
+  region: "EG",
 };
 const extraParams = {
-        with_origin_country: "EG",
-        with_original_language:'ar',
-        'primary_release_date.gte':'2020-01-01',
-        'primary_release_date.lte':'2025-12-31',
-  };
+  with_origin_country: "EG",
+  with_original_language: "ar",
+  "primary_release_date.gte": "2020-01-01",
+  "primary_release_date.lte": "2025-12-31",
+};
 
-  const tmdbApi = {
+const tmdbApi = {
   // ✅ Movies List
   getMoviesList: (params = {}) => {
     const url = "discover/movie";
@@ -78,16 +77,16 @@ const extraParams = {
   },
 
   // ✅ Similar content
-similar: (cate, id, params = {}) => {
-  const url = `${category[cate]}/${id}/similar`;
-  return axiosInstance.get(url, {
-    params: {
-      ...mainParams,
-      ...extraParams,
-      ...params, // هنا تيجي اللغة
-    },
-  });
-},
+  similar: (cate, id, params = {}) => {
+    const url = `${category[cate]}/${id}/similar`;
+    return axiosInstance.get(url, {
+      params: {
+        ...mainParams,
+        ...extraParams,
+        ...params, // هنا تيجي اللغة
+      },
+    });
+  },
 
   // ✅ Recommendations
   recommendations: (cate, id) => {
@@ -96,9 +95,6 @@ similar: (cate, id, params = {}) => {
       params: { ...mainParams, ...extraParams },
     });
   },
-
-
-
 
   // ✅ General Get Details with language
   getDetails: (mediaType, id, language = "en-US") => {
@@ -113,7 +109,6 @@ similar: (cate, id, params = {}) => {
 };
 
 export default tmdbApi;
-
 
 // const tmdbApi = {
 //   getMoviesList: (params = {}) => {
@@ -145,10 +140,10 @@ export default tmdbApi;
 //     const url = category[cate] + "/" + id + "/credits";
 //     return axiosInstance.get(url, { params: {} });
 //   },
-//   // similar: (cate, id) => {
-//   //   const url = category[cate] + "/" + id + "/similar";
-//   //   return axiosInstance.get(url, { params: {} });
-//   // },
+  // similar: (cate, id) => {
+  //   const url = category[cate] + "/" + id + "/similar";
+  //   return axiosInstance.get(url, { params: {} });
+  // },
 
 //   similar: (cate, id) => {
 //   const url = `${category[cate]}/${id}/similar`;

@@ -25,12 +25,12 @@ export default function MovieDetails() {
 
   useEffect(() => {
     (async () => {
-        const params = {
-          language: selectedLanguage,
-        };
-       window.scrollTo({ top: 0 });
+      const params = {
+        language: selectedLanguage,
+      };
+      window.scrollTo({ top: 0 });
       const movie_res = await tmdbApi.detail(category.movie, id, params);
-      const recommend_res = await tmdbApi.similar(category.movie, id , params);
+      const recommend_res = await tmdbApi.similar(category.movie, id, params);
       // const review_res = await axios.get(
       //   `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${apiKey}`
       // );
@@ -43,28 +43,25 @@ export default function MovieDetails() {
     })();
   }, [id, selectedLanguage]);
 
-
   useEffect(() => {
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/reviews`,
-        {
-          params: {
-            api_key: apiKey,
-          },
-        }
-      );
-      setReviews(res.data.results);
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-    }
-  };
+    const fetchReviews = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/reviews`,
+          {
+            params: {
+              api_key: apiKey,
+            },
+          }
+        );
+        setReviews(res.data.results);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
 
-  fetchReviews();
-}, [id, selectedLanguage]);
-
-
+    fetchReviews();
+  }, [id, selectedLanguage]);
 
   return (
     <>

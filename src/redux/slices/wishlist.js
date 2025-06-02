@@ -14,12 +14,14 @@ const wishlistSlice = createSlice({
           item.media_type === action.payload.media_type
       );
       if (!exists) {
-        state.items.push({ id: action.payload.id, media_type: action.payload.media_type });
+        state.items.push({
+          id: action.payload.id,
+          media_type: action.payload.media_type,
+        });
         state.count += 1;
       }
     },
 
-    
     removeFromWishList: (state, action) => {
       const filtered = state.items.filter(
         (item) =>
@@ -32,8 +34,6 @@ const wishlistSlice = createSlice({
       state.count = filtered.length;
     },
 
-
-    
     clearWishList: (state) => {
       state.items = [];
       state.count = 0;

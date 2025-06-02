@@ -1,6 +1,6 @@
 # 🎬 React Movie App
 
-![Home Screenshot](./screenshots/home.png)
+![Home Screenshot](./src/assets/image.png)
 
 A responsive and dynamic movie & TV show browser built with **React**, **Redux Toolkit**, **Vite**, and **TMDb API**. Users can explore movies/TV shows, view details, search, add favorites, and toggle languages and layout directions.
 
